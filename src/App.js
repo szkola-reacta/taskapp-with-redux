@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { createStore, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
+
+import { Form, List } from './components/Todo';
+
+import tasksReducer from './components/Todo/state';
+
+const store = createStore(
+  combineReducers({
+    tasks: tasksReducer,
+  }),
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
+
+// read: getState
+// write: reducers
+console.log(store.getState());
+// store.dispatch(add('Zmyć naczynia'))
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Provider store={store}>
+        <Form />
+        <List />
+      </Provider>
     </div>
   );
 }
